@@ -4236,6 +4236,7 @@
         }
 
         function generateOpportunities(days, customFrom, customTo) {
+            let allTimeDays;
             if (!LIVE_DATA) return;
             const range = getDateRange(days || 7, customFrom, customTo);
             const opps = [];
@@ -4274,7 +4275,7 @@
             if (LIVE_DATA.buyBoxAlerts && LIVE_DATA.buyBoxAlerts.length > 0) {
                 // Scale lost revenue to period
                 const totalLostAllTime = LIVE_DATA.buyBoxAlerts.reduce((s, a) => s + (a.revenueLost || 0), 0);
-                const allTimeDays = Math.round((new Date(LIVE_DATA.dateRange.end) - new Date(LIVE_DATA.dateRange.start)) / 86400000);
+                allTimeDays = Math.round((new Date(LIVE_DATA.dateRange.end) - new Date(LIVE_DATA.dateRange.start)) / 86400000);
                 const scaleFactor = periodDays / Math.max(allTimeDays, 1);
                 const periodLost = Math.round(totalLostAllTime * scaleFactor);
                 const worst = LIVE_DATA.buyBoxAlerts[0];
