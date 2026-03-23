@@ -2717,7 +2717,7 @@
             const prevData = isMonthly ? monthlyData.prevYearRevenue : null;
 
             if (revenueChart) {
-                revenueChart.destroy();
+                if (typeof revenueChart.destroy === 'function') revenueChart.destroy();
             }
 
             revenueChart = new Chart(ctx, {
@@ -3695,7 +3695,7 @@
             });
 
             // Destroy existing chart if any
-            if (window.performanceMatrixChart) {
+            if (window.performanceMatrixChart && typeof window.performanceMatrixChart.destroy === 'function') {
                 window.performanceMatrixChart.destroy();
             }
 
