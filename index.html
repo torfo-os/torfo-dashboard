@@ -12,7 +12,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
+        
 
         body {
             font-family: 'Inter', sans-serif;
@@ -2209,7 +2209,7 @@
         // Supabase configuration
         const SUPABASE_URL = 'https://xtqisluailtesgornfnn.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cWlzbHVhaWx0ZXNnb3JuZm5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MTA1MjgsImV4cCI6MjA4NzQ4NjUyOH0.Xz9qcgRmInH4uxt0-Sf92FZEQzBrJx88H534sAuc9vc'; // anon key — read-only via RLS
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         
         // Loading overlay
         function showLoadingOverlay() {
@@ -2283,7 +2283,7 @@
             
             try {
                 while (true) {
-                    const { data, error } = await supabase
+                    const { data, error } = await supabaseClient
                         .from(tableName)
                         .select(columns.join(', '))
                         .range(offset, offset + pageSize - 1);
