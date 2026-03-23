@@ -2210,6 +2210,7 @@
         const SUPABASE_URL = 'https://xtqisluailtesgornfnn.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh0cWlzbHVhaWx0ZXNnb3JuZm5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MTA1MjgsImV4cCI6MjA4NzQ4NjUyOH0.Xz9qcgRmInH4uxt0-Sf92FZEQzBrJx88H534sAuc9vc'; // anon key — read-only via RLS
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+            const safeNum = (v) => Number(v) || 0;
         
         // Loading overlay
         function showLoadingOverlay() {
@@ -3901,7 +3902,7 @@
                     <td style="font-weight: 600; font-family: monospace;">${item.asin}</td>
                     <td style="font-size: 12px; max-width: 200px;">${(item.name || '').substring(0, 50)}</td>
                     <td style="text-align: right;">${item.stock}</td>
-                    <td style="text-align: right;">${item.daily_velocity.toFixed(1)}</td>
+                    <td style="text-align: right;">${safeNum(item.daily_velocity).toFixed(1)}</td>
                     <td style="text-align: right;">${item.days_cover}</td>
                     <td style="text-align: right;">${stockoutStr}</td>
                     <td style="text-align: right;">${reorderStr}</td>
@@ -4122,12 +4123,12 @@
                 return `
                     <tr style="border-bottom: 1px solid rgba(167,139,250,0.1); background: ${bgColor};">
                         <td style="padding: 12px; color: #e0e0e8;">${fee.name.substring(0, 50)}</td>
-                        <td style="text-align: right; padding: 12px; color: #8888a0;">₹${fee.price.toFixed(0)}</td>
-                        <td style="text-align: right; padding: 12px; color: #60a5fa;">₹${fee.totalFees.toFixed(2)}</td>
-                        <td style="text-align: right; padding: 12px; color: #a78bfa;">₹${fee.fbaFee.toFixed(2)}</td>
-                        <td style="text-align: right; padding: 12px; color: #f59e0b;">₹${fee.referralFee.toFixed(2)}</td>
-                        <td style="text-align: right; padding: 12px; color: #facc15;">₹${fee.otherFees.toFixed(2)}</td>
-                        <td style="text-align: right; padding: 12px; color: ${isHighFee ? '#ef4444' : '#10b981'}; font-weight: 600; background: ${isHighFee ? 'rgba(239,68,68,0.1)' : ''};">${fee.feePct.toFixed(1)}%</td>
+                        <td style="text-align: right; padding: 12px; color: #8888a0;">₹${safeNum(fee.price).toFixed(0)}</td>
+                        <td style="text-align: right; padding: 12px; color: #60a5fa;">₹${safeNum(fee.totalFees).toFixed(2)}</td>
+                        <td style="text-align: right; padding: 12px; color: #a78bfa;">₹${safeNum(fee.fbaFee).toFixed(2)}</td>
+                        <td style="text-align: right; padding: 12px; color: #f59e0b;">₹${safeNum(fee.referralFee).toFixed(2)}</td>
+                        <td style="text-align: right; padding: 12px; color: #facc15;">₹${safeNum(fee.otherFees).toFixed(2)}</td>
+                        <td style="text-align: right; padding: 12px; color: ${isHighFee ? '#ef4444' : '#10b981'}; font-weight: 600; background: ${isHighFee ? 'rgba(239,68,68,0.1)' : ''};">${safeNum(fee.feePct).toFixed(1)}%</td>
                     </tr>
                 `;
             }).join('');
@@ -4375,7 +4376,7 @@
                     title: 'Weekly Momentum Slipping — Orders Down ' + Math.abs(LIVE_DATA.wow.orders).toFixed(1) + '%',
                     impact: Math.abs(Math.round(LIVE_DATA.wow.prior7Rev - LIVE_DATA.wow.last7Rev)),
                     impactLabel: fmt(Math.abs(LIVE_DATA.wow.prior7Rev - LIVE_DATA.wow.last7Rev)) + ' revenue gap vs prior week',
-                    detail: 'Revenue ' + LIVE_DATA.wow.revenue.toFixed(1) + '% WoW (' + fmt(LIVE_DATA.wow.last7Rev) + ' vs ' + fmt(LIVE_DATA.wow.prior7Rev) + '). Orders dropped from ' + LIVE_DATA.wow.prior7Orders + ' to ' + LIVE_DATA.wow.last7Orders + '.',
+                    detail: 'Revenue ' + safeNum(LIVE_DATA.wow.revenue).toFixed(1) + '% WoW (' + fmt(LIVE_DATA.wow.last7Rev) + ' vs ' + fmt(LIVE_DATA.wow.prior7Rev) + '). Orders dropped from ' + LIVE_DATA.wow.prior7Orders + ' to ' + LIVE_DATA.wow.last7Orders + '.',
                     actions: [
                         'Check if stockouts on critical SKUs are causing the drop',
                         'Review listing suppression or ranking changes',
