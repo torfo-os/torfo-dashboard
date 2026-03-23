@@ -3626,10 +3626,10 @@
                 row.innerHTML = `
                     <td style="font-weight: 600; font-family: monospace;">${product.asin}</td>
                     <td style="font-size: 12px; max-width: 200px;">${(product.name || '').substring(0, 50)}</td>
-                    <td style="text-align: right;">${product.sessions.toLocaleString('en-IN')}</td>
-                    <td style="text-align: right;">${product.conversion.toFixed(1)}%</td>
-                    <td style="text-align: right;">${product.buyBox.toFixed(1)}%</td>
-                    <td style="text-align: right;">${product.feePct.toFixed(1)}%</td>
+                    <td style="text-align: right;">${(Number(product.sessions) || 0).toLocaleString('en-IN')}</td>
+                    <td style="text-align: right;">${(Number(product.conversion) || 0).toFixed(1)}%</td>
+                    <td style="text-align: right;">${(Number(product.buyBox) || 0).toFixed(1)}%</td>
+                    <td style="text-align: right;">${(Number(product.feePct) || 0).toFixed(1)}%</td>
                     <td style="color: ${tagColor}; font-weight: 600;">${tag}${feeTag}</td>
                     <td style="font-size: 12px;">${action}</td>
                 `;
